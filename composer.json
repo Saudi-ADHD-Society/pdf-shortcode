@@ -1,0 +1,24 @@
+{
+    "name": "jvarn/ffpdf",
+    "type": "wordpress-plugin",
+    "description": "FFPDF",
+    "keywords": ["wordpress","plugin","pdf"],
+    "license": "GPL-3.0-or-later",
+    "homepage": "https://github.com/jvarn/ffpdf",
+    "authors": [
+        {
+            "name": "Jeremy Varnham",
+            "email": "jeremy.varnham@gmail.com",
+            "homepage": "https://abuyasmeen.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "config": {
+        "platform": {
+            "php": "7.4.28"
+        }
+    },
+    "require": {
+        "mpdf/mpdf": "^8.0"
+    }
+}
