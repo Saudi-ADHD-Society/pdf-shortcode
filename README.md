@@ -3,6 +3,11 @@ Export Formidable Forms Views to PDF with a Shortcode.
 
 This is a work in progress and is intended to be a simpler up-to-date replacement for [Formidable Pro PDF Extended](https://github.com/jvarn/formidable-pro-pdf-extended).
 
+## Requirements
+1. PHP 7.4
+2. Formidable Forms Pro
+3. Formidable Forms Visual Views addon
+
 ## Installation
 
 1. Clone or download.
