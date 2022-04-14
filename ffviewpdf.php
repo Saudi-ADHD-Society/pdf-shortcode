@@ -3,7 +3,7 @@
 Plugin Name: Formidable Views PDF
 Plugin URI: https://github.com/jvarn/ff-views-pdf
 Description: Export Formidable Forms Views to PDF with a Shortcode
-Version: 0.1.4
+Version: 0.2.0
 Author: Jeremy Varnham
 Author URI: https://abuyasmeen.com/
 */
@@ -68,12 +68,15 @@ class FFVIEWPDF {
 	}
 	
 	public function download_form() {
-			return '<form method="post" action="?action=download-ffviewpdf" enctype="multipart/form-data">
-			 <input type="hidden" name="action" value="download-ffviewpdf">
-			 <input type="hidden" name="viewid" value="'. $this->viewid .'">
-			 <input type="hidden" name="type" value="'. $this->type .'">
-			 <input type="submit" value="Download PDF">
-			</form>';
+		$html = '<form method="post" action="?action=download-ffviewpdf" enctype="multipart/form-data">
+		 <input type="hidden" name="action" value="download-ffviewpdf">
+		 <input type="hidden" name="viewid" value="'. $this->viewid .'">
+		 <input type="hidden" name="type" value="'. $this->type .'">
+		 <input type="submit" value="Download PDF">';
+		$html .= wp_nonce_field( 'ffviewpdf_form', 'ffviewpdf_form_nonce', true, false );
+		$html .= '</form>';
+		
+		return $html;
 	}
 
 	public function insert_form( $atts, $content="" ) {
@@ -118,7 +121,19 @@ class FFVIEWPDF {
 	
 	private function is_form_submitted() {
 		if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset( $_REQUEST['action'] ) && 'download-ffviewpdf' === $_REQUEST['action'] ) {
-			return true;
+			if ( $this->check_nonce() === false ) {
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	private function check_nonce() {
+		if ( !isset( $_POST['ffviewpdf_form_nonce'] ) || !wp_verify_nonce( $_POST['ffviewpdf_form_nonce'], 'ffviewpdf_form' ) ) {
+			return false;
 		}
 	}
 	
