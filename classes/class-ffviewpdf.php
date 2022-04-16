@@ -40,14 +40,14 @@ class FFVIEWPDF {
 	 *
 	 * @var array
 	 */
-	protected $input_args = array();
+	private $input_args = array();
 
 	/**
 	 * $output_args input args merged with defaults
 	 *
 	 * @var array
 	 */
-	private $output_args = array();
+	protected $output_args = array();
 
 	/**
 	 * $is_form_submitted has the form been submitted?
@@ -158,7 +158,7 @@ class FFVIEWPDF {
 	 *
 	 * @return void
 	 */
-	public function process_form() {
+	private function process_form() {
 		if ( $this->is_form_submitted ) {
 			$this->set_args(); // to-do: process $content as html.
 			$html = $this->get_pdf_content( $this->output_args['type'] );
@@ -207,7 +207,7 @@ class FFVIEWPDF {
 	/**
 	 * Checks if the form has been submitted.
 	 */
-	private function is_form_submitted() {
+	protected function is_form_submitted() {
 		if ( isset( $_POST['action'] ) && 'download-ffviewpdf' === \sanitize_key( $_POST['action'] ) ) {
 			if ( $this->check_nonce() === false ) {
 				$this->is_form_submitted = false;
@@ -224,7 +224,7 @@ class FFVIEWPDF {
 	 *
 	 * @return boolean false if nonce check fails
 	 */
-	private function check_nonce() {
+	protected function check_nonce() {
 		if ( ! isset( $_POST['ffviewpdf_form_nonce'] ) || ! \wp_verify_nonce( \sanitize_key( $_POST['ffviewpdf_form_nonce'] ), 'ffviewpdf_form' ) ) {
 			return false;
 		}
