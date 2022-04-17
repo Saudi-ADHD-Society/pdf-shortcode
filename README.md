@@ -54,4 +54,4 @@ Filename without .pdf file extension.
 
 ## Note
 
-Most configuration options are hard-coded at the moment, but can be modified by following the [mPDF documentation](https://mpdf.github.io).
+Advanced configuration options are available by following the [mPDF documentation](https://mpdf.github.io).
