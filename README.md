@@ -17,6 +17,8 @@ $ cd ff-views-pdf
 $ composer install
 ```
 3. Upload to plugins directory and activate.
+4. Set your default options via `options-general.php?page=options-ffviewpdf`.
+5. Set inline options in shortcodes (see below).
 
 ## Usage
 
