@@ -157,7 +157,7 @@ class FfViewPdf {
 			$html .= '<input type="hidden" name="' . $key . '" value="' . $this->output_args[ $key ] . '">';
 		}
 
-		$html .= '<input type="submit" value="Download PDF">';
+		$html .= '<input type="submit" value="' . __( 'Download PDF', 'ffviewpdf' ) . '">';
 		$html .= \wp_nonce_field( 'ffviewpdf_form', 'ffviewpdf_form_nonce', true, false );
 		$html .= '</form>';
 
