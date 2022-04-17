@@ -128,10 +128,17 @@ class ffViewPdf {
 		return $args;
 	}
 
-	/* protected function merge_args( $array ) {
+	/**
+	 * Merges defaults with post args
+	 *
+	 * @param  array $array post args.
+	 * @return array        merged args
+	 * @deprecated
+	 */
+	protected function merge_args( $array ) {
 		$args = array_merge( $array, $this->default_args );
 		return $args;
-	} */
+	}
 
 	/**
 	 * Displays a button to trigger the PDF download.
