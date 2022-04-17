@@ -10,8 +10,6 @@
  * @package jvarn\ffviewpdf
  */
 
-namespace jvarn\ffViewPdf; // does this go here or just in class?
-
 /**
  * No direct access.
  */
