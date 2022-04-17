@@ -10,7 +10,7 @@
  * @package jvarn\ffviewpdf
  */
 
-namespace jvarn\ffViewPdf;
+namespace jvarn\ffViewPdf; // does this go here or just in class?
 
 /**
  * No direct access.
@@ -28,7 +28,7 @@ define( 'WP_FFVIEW_PDF_PATH', plugin_dir_path( __FILE__ ) );
  * Load plugin textdomain.
  */
 function ffviewpdf_load_textdomain() {
-	load_plugin_textdomain( 'ffviewpdf', false, WP_FFVIEW_PDF_PATH . '/languages' );
+	load_plugin_textdomain( 'ffviewpdf', false, WP_FFVIEW_PDF_PATH . '/languages' ); // to-do: generate pot file.
 }
 
 /**
