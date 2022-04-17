@@ -2,7 +2,7 @@
 /**
  * FFVIEWPDF Class.
  *
- * @package jvarn\ffviewpdf\ffviewpdf
+ * @package jvarn\ffviewpdf
  */
 
 namespace jvarn\FFVIEWPDF;
@@ -187,20 +187,20 @@ class FFVIEWPDF {
 	 * Gets the content to be inserted into the PDF.
 	 *
 	 * @param  string $type the type of content (page, view, html).
-	 * @return string the content
+	 * @return string html
 	 */
 	private function get_pdf_content( $type ) {
-		switch ( $type ) {
+		switch ( $type ) { // to-do: add define_type method.
 			case 'page':
 				return \get_the_content();
 			case 'view':
-				if ( function_exists( 'load_formidable_forms' ) ) { // to-do: function check for Views.
+				if ( function_exists( 'load_formidable_forms' ) ) { // to-do: function check for Views instead of FF.
 					return \FrmViewsDisplaysController::get_shortcode( array( 'id' => $this->output_args['viewid'] ) );
 				} else {
-					return __( 'Formidable Forms not found.', 'ffviewpdf_textdomain' );
+					return \__( 'Formidable Forms not found.', 'ffviewpdf_textdomain' );
 				}
 			case 'html':
-				return 'html'; // to-do.
+				return 'html'; // to-do: using shortcode $content.
 		}
 	}
 
