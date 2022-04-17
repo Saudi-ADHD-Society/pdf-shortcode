@@ -17,6 +17,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class FfViewPdf
  */
+
+namespace jvarn\FfViewPdf;
+
 class FfViewPdf {
 
 	/**
@@ -32,8 +35,8 @@ class FfViewPdf {
 		'orientation'         => 'P',
 		'direction'           => 'ltr',
 		'filename'            => 'filename',
-		'auto_script_to_lang' => true,
-		'auto_lang_to_font'   => true,
+		'auto_script_to_lang' => null,
+		'auto_lang_to_font'   => null,
 	);
 
 	/**
@@ -89,11 +92,37 @@ class FfViewPdf {
 			return $this->insert_form();
 		}
 	}
+	
+	/**
+	 * Gets the settings from the backend.
+	 *
+	 * @see class-ffviewpdf-admin.php Admin settings
+	 */
+	protected function get_default_settings() {
+		if ( \get_option( 'ffviewpdf_options' ) ) {
+			$options = \get_option( 'ffviewpdf_options' );
+			$args = array(
+				'orientation'         => $options['ffviewpdf_field_orientation'],
+				'direction'           => $options['ffviewpdf_field_direction'],
+				'filename'            => $options['ffviewpdf_field_filename'],
+				'auto_script_to_lang' => $options['ffviewpdf_field_scripttolang'],
+				'auto_lang_to_font'   => $options['ffviewpdf_field_langtofont'],
+			);
+			$merged = \shortcode_atts(
+				$this->default_args,
+				$args,
+				'ffviewpdf-saved-settings',
+			);
+
+			$this->default_args = $merged;
+		}
+	}
 
 	/**
 	 * Sets the args before and after form submission.
 	 */
 	private function set_args() {
+		$this->get_default_settings();
 		if ( $this->is_form_submitted ) {
 			$this->output_args = $this->process_post_args();
 		} else {
@@ -110,7 +139,7 @@ class FfViewPdf {
 		$args = \shortcode_atts( // same as array merge ...
 			$this->default_args,
 			$this->input_args,
-			'ffviewpdf', // ... but has hook
+			'ffviewpdf-default-settings', // ... but has hook
 		);
 		return $args;
 	}
@@ -127,19 +156,6 @@ class FfViewPdf {
 				$args[ $key ] = \sanitize_key( $_POST[ $key ] );
 			}
 		}
-		//$args = $this->merge_args( $args );
-		return $args;
-	}
-
-	/**
-	 * Merges defaults with post args
-	 *
-	 * @param  array $array post args.
-	 * @return array        merged args
-	 * @deprecated
-	 */
-	protected function merge_args( $array ) {
-		$args = array_merge( $array, $this->default_args );
 		return $args;
 	}
 
@@ -184,8 +200,8 @@ class FfViewPdf {
 
 			$mpdf->SetDirectionality( $this->output_args['direction'] );
 
-			$mpdf->autoScriptToLang = $this->output_args['auto_script_to_lang'];
-			$mpdf->autoLangToFont   = $this->output_args['auto_lang_to_font'];
+			$mpdf->autoScriptToLang = ( 1 == $this->output_args['auto_script_to_lang'] ) ? true : false;
+			$mpdf->autoLangToFont   = ( 1 == $this->output_args['auto_lang_to_font'] ) ? true : false;
 			$mpdf->baseScript       = 1;
 
 			$stylesheet = \file_get_contents( WP_FFVIEW_PDF_PATH . 'style.css' );
