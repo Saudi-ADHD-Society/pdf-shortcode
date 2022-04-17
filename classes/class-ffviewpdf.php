@@ -186,7 +186,7 @@ class FfViewPdf {
 	 * Must be public so it can be called by Wordpress add_action().
 	 *
 	 * @return void
-	 * @see https://mpdf.github.io/
+	 * @see https://mpdf.github.io/ mPdf Manual
 	 */
 	public function process_form() {
 		if ( $this->is_form_submitted ) {
@@ -216,7 +216,12 @@ class FfViewPdf {
 	/**
 	 * Gets the content to be inserted into the PDF.
 	 *
-	 * @param  string $type the type of content (page, view, html).
+	 * Description of types:
+	 * 'view' requires Formidable Forms Pro with Visual Views addon
+	 * 'page' can be used with any WordPress installation
+	 * 'html' parses content between shortcode opening and closing tags.
+	 *
+	 * @param  string $type the type of content.
 	 * @return string html
 	 * @todo   for view do function check for Views addon instead of FF.
 	 * @todo   do html case using shortcode $content.
