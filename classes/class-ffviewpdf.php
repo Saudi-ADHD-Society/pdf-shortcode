@@ -124,7 +124,7 @@ class ffViewPdf {
 				$args[ $key ] = \sanitize_key( $_POST[ $key ] );
 			}
 		}
-		// $args = $this->merge_args( $args ); // do I need to do this?
+		// $args = $this->merge_args( $args ); // to-do: test if I need to do this.
 		return $args;
 	}
 
