@@ -1,11 +1,11 @@
 <?php
 /**
- * FFVIEWPDF Class.
+ * ffViewPdf Class.
  *
  * @package jvarn\ffviewpdf
  */
 
-namespace jvarn\FFVIEWPDF;
+namespace jvarn\ffViewPdf;
 
 // Prevent Direct Access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,11 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class FFVIEWPDF
- *
- * @package jvarn\ffviewpdf
+ * Class ffViewPdf
  */
-class FFVIEWPDF {
+class ffViewPdf {
 
 	/**
 	 * [$default_args default args]
@@ -25,7 +23,7 @@ class FFVIEWPDF {
 	 * @var array
 	 */
 	private $default_args = array(
-		'viewid'              => 1,
+		'viewid'              => 1, // to-do: change to 'id' so it can be used with page as well.
 		'type'                => 'view',
 		'encoding'            => 'utf-8',
 		'orientation'         => 'P',
@@ -232,4 +230,4 @@ class FFVIEWPDF {
 
 
 }
-$ffviewpdf = new FFVIEWPDF();
+$ffviewpdf = new ffViewPdf();
