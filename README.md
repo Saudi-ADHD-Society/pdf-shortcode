@@ -1,5 +1,5 @@
 # Formidable Views PDF 
-Export Formidable Forms Views to PDF with a Shortcode.
+Export Formidable Forms Views or Wordpress Pages to PDF with a Shortcode.
 
 This is a work in progress and is intended to be a simpler up-to-date replacement for [Formidable Pro PDF Extended](https://github.com/jvarn/formidable-pro-pdf-extended).
 
@@ -24,6 +24,30 @@ $ composer install
 `[ffviewpdf viewid=X type=view]`
 * Export current page as PDF
 `[ffviewpdf type=page]`
+
+## Other options
+### Page orientation
+1. Landscape
+```
+[ffviewpdf orientation=L]
+```
+2. Portrait
+```
+[ffviewpdf orientation=P]
+```
+### Direction
+1. Left-to-Right
+```
+[ffviewpdf direction=ltr]
+```
+2. Right-to-Left
+```
+[ffviewpdf direction=rtl]
+```
+### Custom filename
+```
+[ffviewpdf filename=newfile]
+```
 
 ## Note
 
