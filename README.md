@@ -47,6 +47,7 @@ $ composer install
 [ffviewpdf direction=rtl]
 ```
 ### Custom filename
+Filename without .pdf file extension.
 ```
 [ffviewpdf filename=newfile]
 ```
