@@ -147,6 +147,7 @@ class FfViewPdf {
 	 * Displays a button to trigger the PDF download.
 	 *
 	 * @return string html form
+	 * @todo add key to nonce field to make unique ID if more than one ffviewpdf shortcode is used on the same page.
 	 */
 	public function insert_form() {
 		$html = '<form method="post" action="?action=download-ffviewpdf" enctype="multipart/form-data">
