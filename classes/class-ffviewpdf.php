@@ -17,9 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class FfViewPdf
  */
-
-namespace jvarn\FfViewPdf;
-
 class FfViewPdf {
 
 	/**
@@ -92,7 +89,7 @@ class FfViewPdf {
 			return $this->insert_form();
 		}
 	}
-	
+
 	/**
 	 * Gets the settings from the backend.
 	 *
@@ -101,14 +98,14 @@ class FfViewPdf {
 	protected function get_default_settings() {
 		if ( \get_option( 'ffviewpdf_options' ) ) {
 			$options = \get_option( 'ffviewpdf_options' );
-			$args = array(
+			$args    = array(
 				'orientation'         => $options['ffviewpdf_field_orientation'],
 				'direction'           => $options['ffviewpdf_field_direction'],
 				'filename'            => $options['ffviewpdf_field_filename'],
 				'auto_script_to_lang' => $options['ffviewpdf_field_scripttolang'],
 				'auto_lang_to_font'   => $options['ffviewpdf_field_langtofont'],
 			);
-			$merged = \shortcode_atts(
+			$merged  = \shortcode_atts(
 				$this->default_args,
 				$args,
 				'ffviewpdf-saved-settings',
@@ -183,7 +180,7 @@ class FfViewPdf {
 	/**
 	 * Outputs the generated PDF.
 	 *
-	 * Must be public so it can be called by Wordpress add_action().
+	 * Must be public so it can be called by WordPress add_action().
 	 *
 	 * @return void
 	 * @see https://mpdf.github.io/ mPdf Manual

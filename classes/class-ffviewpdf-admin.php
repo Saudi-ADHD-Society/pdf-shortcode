@@ -75,7 +75,7 @@ class FfViewPdf_Admin {
 
 		\add_settings_section(
 			'ffviewpdf_section_defaults',
-			( 'PDF Settings.', 'ffviewpdf' ),
+			__( 'PDF Settings', 'ffviewpdf' ),
 			array( $this, 'section_defaults_callback' ),
 			'ffviewpdf'
 		);
