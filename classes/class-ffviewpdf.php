@@ -7,7 +7,9 @@
 
 namespace jvarn\ffViewPdf;
 
-// Prevent Direct Access.
+/**
+ * No direct access
+ */
 if ( ! defined( 'ABSPATH' ) ) {
 	wp_die();
 }
@@ -195,7 +197,7 @@ class ffViewPdf {
 				if ( function_exists( 'load_formidable_forms' ) ) { // to-do: function check for Views instead of FF.
 					return \FrmViewsDisplaysController::get_shortcode( array( 'id' => $this->output_args['viewid'] ) );
 				} else {
-					return \__( 'Formidable Forms not found.', 'ffviewpdf_textdomain' );
+					return \__( 'Formidable Forms not found.', 'ffviewpdf' );
 				}
 			case 'html':
 				return 'html'; // to-do: using shortcode $content.
