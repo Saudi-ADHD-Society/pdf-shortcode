@@ -31,7 +31,7 @@ class FfViewPdf {
 		'encoding'            => 'utf-8',
 		'orientation'         => 'P',
 		'direction'           => 'ltr',
-		'filename'            => 'filename.pdf',
+		'filename'            => 'filename',
 		'auto_script_to_lang' => true,
 		'auto_lang_to_font'   => true,
 	);
@@ -41,7 +41,7 @@ class FfViewPdf {
 	 *
 	 * @var array
 	 */
-	private $input_args = array();
+	protected $input_args = array();
 
 	/**
 	 * $output_args input args merged with defaults
@@ -127,7 +127,7 @@ class FfViewPdf {
 				$args[ $key ] = \sanitize_key( $_POST[ $key ] );
 			}
 		}
-		// $args = $this->merge_args( $args );
+		//$args = $this->merge_args( $args );
 		return $args;
 	}
 
@@ -152,8 +152,8 @@ class FfViewPdf {
 		$html = '<form method="post" action="?action=download-ffviewpdf" enctype="multipart/form-data">
 		 <input type="hidden" name="action" value="download-ffviewpdf">';
 
-		foreach ( $this->defaults as $key => $value ) {
-			$html .= '<input type="hidden" name="' . $this->output_args[ $key ] . '" value="' . $this->output_args[ $key ] . '">';
+		foreach ( $this->default_args as $key => $value ) {
+			$html .= '<input type="hidden" name="' . $key . '" value="' . $this->output_args[ $key ] . '">';
 		}
 
 		$html .= '<input type="submit" value="Download PDF">';
@@ -166,10 +166,12 @@ class FfViewPdf {
 	/**
 	 * Outputs the generated PDF.
 	 *
+	 * Must be public so it can be called by Wordpress add_action().
+	 *
 	 * @return void
 	 * @see https://mpdf.github.io/
 	 */
-	private function process_form() {
+	public function process_form() {
 		if ( $this->is_form_submitted ) {
 			$this->set_args();
 			$html = $this->get_pdf_content( $this->output_args['type'] );
@@ -190,7 +192,7 @@ class FfViewPdf {
 			$mpdf->WriteHTML( $stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS );
 			$mpdf->WriteHTML( $html, \Mpdf\HTMLParserMode::HTML_BODY );
 
-			$mpdf->Output( $this->output_args['filename'], \Mpdf\Output\Destination::DOWNLOAD );
+			$mpdf->Output( $this->output_args['filename'] . '.pdf', \Mpdf\Output\Destination::DOWNLOAD );
 		}
 	}
 

@@ -3,7 +3,7 @@
  * Plugin Name: Formidable Views PDF
  * Plugin URI: https://github.com/jvarn/ff-views-pdf
  * Description: Export WordPress content including Formidable Forms Views to PDF with a Shortcode.
- * Version: 0.3.2
+ * Version: 0.3.3
  * Author: Jeremy Varnham
  * Author URI: https://abuyasmeen.com/
  *
@@ -36,5 +36,5 @@ function ffviewpdf_load_textdomain() {
  */
 if ( ! class_exists( 'Mpdf' ) ) {
 	require_once WP_FFVIEW_PDF_PATH . 'vendor/autoload.php';
-	require_once WP_FFVIEW_PDF_PATH . 'classes/class-ffviewphp.php';
+	require_once WP_FFVIEW_PDF_PATH . 'classes/class-ffviewpdf.php';
 }
