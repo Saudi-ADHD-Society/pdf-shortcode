@@ -1,11 +1,11 @@
 <?php
 /**
- * ffViewPdf Class.
+ * FfViewPdf Class.
  *
  * @package jvarn\ffviewpdf
  */
 
-namespace jvarn\ffViewPdf;
+namespace jvarn\FfViewPdf;
 
 /**
  * No direct access
@@ -15,17 +15,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class ffViewPdf
+ * Class FfViewPdf
  */
-class ffViewPdf {
+class FfViewPdf {
 
 	/**
 	 * [$default_args default args]
 	 *
 	 * @var array
+	 * @todo change 'viewid' to 'id' so it can be used with page as well.
 	 */
 	private $default_args = array(
-		'viewid'              => 1, // to-do: change to 'id' so it can be used with page as well.
+		'viewid'              => 1,
 		'type'                => 'view',
 		'encoding'            => 'utf-8',
 		'orientation'         => 'P',
@@ -76,11 +77,12 @@ class ffViewPdf {
 	 * Shortcode function.
 	 *
 	 * @param  array  $atts    shortcode args.
-	 * @param  string $content shorcode content.
-	 * @return array           content for output to screen by shortcode.
+	 * @param  string $content shortcode content.
+	 * @return array           content for output to screen by shortcode
+	 * @todo   process $content as html (see get_pdf_content()).
 	 */
 	public function make_shortcode( $atts, $content = null ) {
-		$this->input_args = $atts; // to-do: process $content as html.
+		$this->input_args = $atts;
 		$this->set_args();
 
 		if ( ! $this->is_form_submitted ) {
@@ -117,6 +119,7 @@ class ffViewPdf {
 	 * Processes args after form submission.
 	 *
 	 * @return array args ready for output
+	 * @todo   test if array merge is necessary.
 	 */
 	protected function process_post_args() {
 		foreach ( $this->default_args as $key => $value ) {
@@ -124,7 +127,7 @@ class ffViewPdf {
 				$args[ $key ] = \sanitize_key( $_POST[ $key ] );
 			}
 		}
-		// $args = $this->merge_args( $args ); // to-do: test if I need to do this.
+		// $args = $this->merge_args( $args );
 		return $args;
 	}
 
@@ -164,10 +167,11 @@ class ffViewPdf {
 	 * Outputs the generated PDF.
 	 *
 	 * @return void
+	 * @see https://mpdf.github.io/
 	 */
 	private function process_form() {
 		if ( $this->is_form_submitted ) {
-			$this->set_args(); // to-do: process $content as html.
+			$this->set_args();
 			$html = $this->get_pdf_content( $this->output_args['type'] );
 
 			$mpdf_args['mode']        = $this->output_args['encoding'];
@@ -195,19 +199,22 @@ class ffViewPdf {
 	 *
 	 * @param  string $type the type of content (page, view, html).
 	 * @return string html
+	 * @todo   for view do function check for Views addon instead of FF.
+	 * @todo   do html case using shortcode $content.
+	 * @todo   add define_type() method.
 	 */
 	private function get_pdf_content( $type ) {
-		switch ( $type ) { // to-do: add define_type method.
+		switch ( $type ) {
 			case 'page':
 				return \get_the_content();
 			case 'view':
-				if ( function_exists( 'load_formidable_forms' ) ) { // to-do: function check for Views instead of FF.
+				if ( function_exists( 'load_formidable_forms' ) ) {
 					return \FrmViewsDisplaysController::get_shortcode( array( 'id' => $this->output_args['viewid'] ) );
 				} else {
 					return \__( 'Formidable Forms not found.', 'ffviewpdf' );
 				}
 			case 'html':
-				return 'html'; // to-do: using shortcode $content.
+				return 'html';
 		}
 	}
 
@@ -239,4 +246,4 @@ class ffViewPdf {
 
 
 }
-$ffviewpdf = new ffViewPdf();
+$ffviewpdf = new FfViewPdf();

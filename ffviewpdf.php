@@ -24,9 +24,11 @@ define( 'WP_FFVIEW_PDF_PATH', plugin_dir_path( __FILE__ ) );
 
 /**
  * Load plugin textdomain.
+ *
+ * @todo generate pot file.
  */
 function ffviewpdf_load_textdomain() {
-	load_plugin_textdomain( 'ffviewpdf', false, WP_FFVIEW_PDF_PATH . '/languages' ); // to-do: generate pot file.
+	load_plugin_textdomain( 'ffviewpdf', false, WP_FFVIEW_PDF_PATH . '/languages' );
 }
 
 /**
