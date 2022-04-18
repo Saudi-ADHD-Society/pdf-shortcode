@@ -40,6 +40,6 @@ add_action( 'init', 'ffviewpdf_load_textdomain' );
  */
 if ( ! class_exists( 'Mpdf' ) ) {
 	require_once WP_FFVIEW_PDF_PATH . 'vendor/autoload.php';
-	require_once WP_FFVIEW_PDF_PATH . 'classes/class-ffviewpdf.php';
-	require_once WP_FFVIEW_PDF_PATH . 'classes/class-ffviewpdf-admin.php';
+	//require_once WP_FFVIEW_PDF_PATH . 'classes/class-ffviewpdf.php';
+	//require_once WP_FFVIEW_PDF_PATH . 'classes/class-ffviewpdf-admin.php';
 }
