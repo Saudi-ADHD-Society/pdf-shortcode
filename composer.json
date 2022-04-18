@@ -1,10 +1,10 @@
 {
-    "name": "jvarn/ffpdf",
+    "name": "jvarn/pdf-shortcode",
     "type": "wordpress-plugin",
-    "description": "FFPDF",
-    "keywords": ["wordpress","plugin","pdf"],
+    "description": "Wordpress PDF Shortcode",
+    "keywords": ["wordpress","plugin","pdf","pdf-generator","formidable-forms","visual-views"],
     "license": "GPL-3.0-or-later",
-    "homepage": "https://github.com/jvarn/ffpdf",
+    "homepage": "https://github.com/jvarn/pdf-shortcode",
     "authors": [
         {
             "name": "Jeremy Varnham",
@@ -18,12 +18,12 @@
             "php": "7.4.28"
         }
     },
-    "require": {
-        "mpdf/mpdf": "^8.0"
-    },
 	"autoload"    : {
 		"psr-4" : {
 			"Jvarn\\" : "src/"
 		}
-	}
+	},
+    "require": {
+        "mpdf/mpdf": "^8.0"
+    }
 }
