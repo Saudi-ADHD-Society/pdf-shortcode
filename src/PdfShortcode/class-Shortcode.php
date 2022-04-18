@@ -1,11 +1,11 @@
 <?php
 /**
- * FfViewPdf Class.
+ * Shortcode Class.
  *
- * @package jvarn\ffviewpdf
+ * @package jvarn\pdfshortcode
  */
 
-namespace jvarn\FfViewPdf;
+namespace Jvarn\PdfShortcode;
 
 /**
  * No direct access
@@ -15,9 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class FfViewPdf
+ * Class Shortcode
  */
-class FfViewPdf {
+class Shortcode {
 
 	/**
 	 * [$default_args default args]
@@ -267,4 +267,4 @@ class FfViewPdf {
 
 
 }
-$ffviewpdf = new FfViewPdf();
+$ffviewpdf = new Shortcode();

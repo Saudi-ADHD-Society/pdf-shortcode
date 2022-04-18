@@ -1,11 +1,11 @@
 <?php
 /**
- * FfViewPdf Admin Class.
+ * Settings Class.
  *
- * @package jvarn\ffviewpdf
+ * @package jvarn\pdfshortcode
  */
 
-namespace jvarn\FfViewPdf;
+namespace Jvarn\PdfShortcode;
 
 /**
  * No direct access
@@ -15,9 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class FfViewPdfAdmin
+ * Class Settings
  */
-class FfViewPdf_Admin {
+class Settings {
 
 	/**
 	 * Construct.
@@ -212,4 +212,4 @@ class FfViewPdf_Admin {
 
 
 }
-$ffviewpdf_admin = new FfViewPdf_Admin();
+$ffviewpdf_settings = new Settings();
