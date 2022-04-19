@@ -22,20 +22,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Shortcode {
 
 	/**
-	 * [$default_args default args]
+	 * Default args.
 	 *
 	 * @var array
 	 * @todo change 'viewid' to 'id' so it can be used with page as well.
 	 */
 	private $default_args = array(
-		'viewid'               => 1,
-		'type'                 => 'view',
-		'encoding'             => 'utf-8',
-		'orientation'          => 'P',
-		'direction'            => 'ltr',
-		'filename'             => 'download',
-		'auto_script_to_lang'  => '',
-		'auto_lang_to_font'    => '',
+		'viewid'              => 1,
+		'type'                => 'view',
+		'encoding'            => 'utf-8',
+		'orientation'         => 'P',
+		'direction'           => 'ltr',
+		'filename'            => 'download',
+		'auto_script_to_lang' => '',
+		'auto_lang_to_font'   => '',
 	);
 
 	/**
@@ -100,9 +100,12 @@ class Shortcode {
 	protected function get_default_settings() {
 		if ( \get_option( 'pdfshortcode_options' ) ) {
 			$options = \get_option( 'pdfshortcode_options' );
-			
-						if( $options['pdfshortcode_field_filename'] == null ) $options['pdfshortcode_field_filename'] = $this->default_args['filename']; // todo
-						
+
+			// Cludge.
+			if ( null === $options['pdfshortcode_field_filename'] ) {
+				$options['pdfshortcode_field_filename'] = $this->default_args['filename'];
+			}
+
 			$args    = array(
 				'orientation'         => $options['pdfshortcode_field_orientation'],
 				'direction'           => $options['pdfshortcode_field_direction'],
@@ -110,6 +113,7 @@ class Shortcode {
 				'auto_script_to_lang' => $options['pdfshortcode_field_scripttolang'],
 				'auto_lang_to_font'   => $options['pdfshortcode_field_langtofont'],
 			);
+
 			$merged  = \shortcode_atts(
 				$this->default_args,
 				$args,
@@ -153,7 +157,7 @@ class Shortcode {
 	 * @todo   why is this being called twice?
 	 */
 	protected function process_post_args() {
-		$options = $this->assemble_args( $_POST['options'] );
+		$options = $this->decrypt_args( $_POST['options'] );
 		foreach ( $this->default_args as $key => $value ) {
 			if ( isset( $options[ $key ] ) ) {
 				$args[ $key ] = $options[ $key ];
@@ -162,35 +166,49 @@ class Shortcode {
 
 		return $args;
 	}
-	/*protected function process_post_args1() {
-		foreach ( $this->default_args as $key => $value ) {
-			if ( isset( $_POST[ $key ] ) ) {
-				$args[ $key ] = \sanitize_key( $_POST[ $key ] );
-			}
-		} //var_dump( $args );
-		return $args;
-	}*/
-	
+
+	/**
+	 * Hash args
+	 *
+	 * Implodes args array into string and makes hash.
+	 *
+	 * @param array $args Shortcode Args.
+	 * @return string hash
+	 */
 	protected function hash_args( $args ) {
-		//foreach( $args as &$arg ) if( $arg === null ) $arg = ''; // Compensate for http_build_query omitting null values
 		$args_string = http_build_query( $args, '', ',' );
 		$args_string = sanitize_key( $args_string );
 		return wp_hash( $args_string );
 	}
 
-	protected function concat_args( $args_array ) {
-	//	foreach( $args_array as &$arg ) if( $arg === null ) $arg = ''; // Compensate for http_build_query omitting null values
-		$args_string = http_build_query( $args_array, '', ',' );
+	/**
+	 * Encrypt Args
+	 *
+	 * Encrypts and implodes args array into string.
+	 *
+	 * @param array $args_array Shortcode Args.
+	 * @return string encrypted string
+	 */
+	protected function encrypt_args( $args_array ) {
+		$args_string     = http_build_query( $args_array, '', ',' );
 		$args_string_enc = Encryption::encrypt( $args_string );
 		return $args_string_enc;
 	}
 
-	protected function assemble_args( $args_string_enc ) {
+	/**
+	 * Decrypt Args
+	 *
+	 * Decrypts and explodes previously imploded string.
+	 *
+	 * @param string $args_string_enc Encoded string.
+	 * @return array Shortcode Args array.
+	 */
+	protected function decrypt_args( $args_string_enc ) {
 		$args_string = Encryption::decrypt( $args_string_enc );
-		$args = explode( ',', $args_string );
-		foreach( $args as $arg ) {
-			$item = explode( '=', $arg );
-			$array[$item[0]] = $item[1];
+		$args        = explode( ',', $args_string );
+		foreach ( $args as $arg ) {
+			$item              = explode( '=', $arg );
+			$array[ $item[0] ] = $item[1];
 		}
 		return $array;
 	}
@@ -203,20 +221,21 @@ class Shortcode {
 	 */
 	public function insert_form() {
 		$hash_args = $this->hash_args( $this->output_args );
-		$html  = '<form method="post" action="?action=download-pdfshortcode" enctype="multipart/form-data">';
-		$html .= '<input type="hidden" name="action" value="download-pdfshortcode">';
-		$html .= '<input type="hidden" name="pdfshortcode_form_check" value="' . $hash_args . '">';
+		$html      = '<form method="post" action="?action=download-pdfshortcode" enctype="multipart/form-data">';
+		$html     .= '<input type="hidden" name="action" value="download-pdfshortcode">';
+		$html     .= '<input type="hidden" name="pdfshortcode_form_check" value="' . $hash_args . '">';
 
+		// For debugging.
 		/*foreach ( $this->default_args as $key => $value ) {
 			$html .= '<input type="hidden" name="' . $key . '" value="' . $this->output_args[ $key ] . '">';
 		}*/
 
-		$html .= '<input type="hidden" name="options" value="' . $this->concat_args( $this->output_args ) . '">'; //Encryption::encrypt( 
+		$html .= '<input type="hidden" name="options" value="' . $this->encrypt_args( $this->output_args ) . '">';
 
 		$html .= '<input type="submit" value="' . \__( 'Download PDF', 'pdfshortcode' ) . '">';
 		$html .= \wp_nonce_field( 'pdfshortcode_form', 'pdfshortcode_form_nonce', true, false );
 		$html .= '</form>';
-		
+
 		return $html;
 	}
 
@@ -234,27 +253,25 @@ class Shortcode {
 			if ( $this->check_hash() ) {
 				$html = $this->get_pdf_content( $this->output_args['type'] );
 
-
 						/*$args_string = http_build_query( $this->output_args, '', ',' );
 						$html .= $args_string;*/
 
-				
 				$mpdf_args['mode']        = $this->output_args['encoding'];
 				$mpdf_args['orientation'] = $this->output_args['orientation'];
-	
+
 				$mpdf = new \Mpdf\Mpdf( $mpdf_args );
-	
+
 				$mpdf->SetDirectionality( $this->output_args['direction'] );
-	
+
 				$mpdf->autoScriptToLang = ( 1 == $this->output_args['auto_script_to_lang'] ) ? true : false;
 				$mpdf->autoLangToFont   = ( 1 == $this->output_args['auto_lang_to_font'] ) ? true : false;
 				$mpdf->baseScript       = 1;
-	
+
 				$stylesheet = \file_get_contents( WP_FFVIEW_PDF_PATH . 'style.css' );
-	
+
 				$mpdf->WriteHTML( $stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS );
 				$mpdf->WriteHTML( $html, \Mpdf\HTMLParserMode::HTML_BODY );
-	
+
 				$mpdf->Output( $this->output_args['filename'] . '.pdf', \Mpdf\Output\Destination::DOWNLOAD );
 			}
 		}
@@ -320,12 +337,8 @@ class Shortcode {
 	 * @return boolean false if nonce check fails
 	 */
 	protected function check_hash() {
-		if ( $this->hash_args( $this->output_args ) === sanitize_key( $_POST['pdfshortcode_form_check']  ) ) {
+		if ( $this->hash_args( $this->output_args ) === sanitize_key( $_POST['pdfshortcode_form_check'] ) ) {
 			return true;
-		} else {
-			//echo '<script>console.log("'.$this->hash_args( $this->output_args ).'");</script>';
-			//echo '<script>console.log("'.sanitize_key( $_POST['pdfshortcode_form_check'] ).'");</script>';
-			
 		}
 	}
 

@@ -18,10 +18,27 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class Settings
  */
 class Settings {
-	
-	private $plugin_name = 'PDF Shortcode',
-			$plugin_dash = 'pdf-shortcode',
-			$plugin_underscore = 'pdf_shortcode';
+
+	/**
+	 * Plugin name.
+	 *
+	 * @var string
+	 */
+	private $plugin_name = 'PDF Shortcode';
+
+	/**
+	 * Plugin name with hyphen.
+	 *
+	 * @var string
+	 */
+	private $plugin_dash = 'pdf-shortcode';
+
+	/**
+	 * Plugin name with underscore.
+	 *
+	 * @var string
+	 */
+	private $plugin_underscore = 'pdf_shortcode';
 
 	/**
 	 * Construct.
@@ -100,8 +117,8 @@ class Settings {
 				'pdfshortcode',
 				'pdfshortcode_section_defaults',
 				array(
-					'label_for'             => 'pdfshortcode_field_' . $value,
-					'class'                 => 'pdfshortcode_row',
+					'label_for'                => 'pdfshortcode_field_' . $value,
+					'class'                    => 'pdfshortcode_row',
 					'pdfshortcode_custom_data' => 'custom',
 				)
 			);
@@ -122,7 +139,7 @@ class Settings {
 	/**
 	 * Direction field callback functions.
 	 *
-	 * @param array $args
+	 * @param array $args Args.
 	 */
 	public function field_direction_callback( $args ) {
 		$options = \get_option( 'pdfshortcode_options' );
@@ -144,7 +161,7 @@ class Settings {
 	/**
 	 * Orientation field callback functions.
 	 *
-	 * @param array $args
+	 * @param array $args Args.
 	 */
 	public function field_orientation_callback( $args ) {
 		$options = \get_option( 'pdfshortcode_options' );
@@ -166,7 +183,7 @@ class Settings {
 	/**
 	 * Filename field callback functions.
 	 *
-	 * @param array $args
+	 * @param array $args Args.
 	 */
 	public function field_filename_callback( $args ) {
 		$options = \get_option( 'pdfshortcode_options' );
@@ -182,7 +199,7 @@ class Settings {
 	/**
 	 * ScriptToLang field callback functions.
 	 *
-	 * @param array $args
+	 * @param array $args Args.
 	 */
 	public function field_scripttolang_callback( $args ) {
 		$options = \get_option( 'pdfshortcode_options' );
@@ -200,7 +217,7 @@ class Settings {
 	/**
 	 * LangToFont field callback functions.
 	 *
-	 * @param array $args
+	 * @param array $args Args.
 	 */
 	public function field_langtofont_callback( $args ) {
 		$options = \get_option( 'pdfshortcode_options' );
