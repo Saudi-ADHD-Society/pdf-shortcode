@@ -8,6 +8,7 @@
 namespace Jvarn\PdfShortcode;
 
 use Jvarn\PdfShortcode\Encryption as Encryption;
+use Jvarn\PdfShortcode\Defaults as Defaults;
 
 /**
  * No direct access
@@ -25,18 +26,8 @@ class Shortcode {
 	 * Default args.
 	 *
 	 * @var array
-	 * @todo change 'viewid' to 'id' so it can be used with page as well.
 	 */
-	private $default_args = array(
-		'viewid'              => 1,
-		'type'                => 'view',
-		'encoding'            => 'utf-8',
-		'orientation'         => 'P',
-		'direction'           => 'ltr',
-		'filename'            => 'download',
-		'auto_script_to_lang' => '',
-		'auto_lang_to_font'   => '',
-	);
+	private $default_args = array();
 
 	/**
 	 * $input_args args entered using shortcode
@@ -63,6 +54,7 @@ class Shortcode {
 	 * Construct.
 	 */
 	public function __construct() {
+		$this->get_default_args();
 		$this->do_actions();
 		$this->is_form_submitted();
 	}
@@ -90,6 +82,13 @@ class Shortcode {
 		if ( ! $this->is_form_submitted ) {
 			return $this->insert_form();
 		}
+	}
+
+	/**
+	 * Gets the defaults from defaults class.
+	 */
+	public function get_default_args() {
+		$this->default_args = Defaults::$args;
 	}
 
 	/**

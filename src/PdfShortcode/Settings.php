@@ -7,6 +7,8 @@
 
 namespace Jvarn\PdfShortcode;
 
+use Jvarn\PdfShortcode\Defaults as Defaults;
+
 /**
  * No direct access
  */
@@ -41,11 +43,26 @@ class Settings {
 	private $plugin_underscore = 'pdf_shortcode';
 
 	/**
+	 * Default args.
+	 *
+	 * @var array
+	 * @todo change 'viewid' to 'id' so it can be used with page as well.
+	 */
+	private $default_args = array();
+
+	/**
 	 * Construct.
 	 */
 	public function __construct() {
 		\add_action( 'admin_menu', array( $this, 'add_submenu_page' ), 9 );
 		\add_action( 'admin_init', array( $this, 'settings_init' ) );
+	}
+
+	/**
+	 * Gets the defaults from defaults class.
+	 */
+	public function get_default_args() {
+		$this->default_args = Defaults::$args;
 	}
 
 	/**
@@ -182,9 +199,9 @@ class Settings {
 	 * @param array $args Args.
 	 */
 	public function field_orientation_callback( $args ) {
-		$options  = \get_option( 'pdfshortcode_options' );
-		$issetp = isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'P', false ) ) : ( '' );
-		$issetl = isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'L', false ) ) : ( '' );
+		$options = \get_option( 'pdfshortcode_options' );
+		$issetp  = isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'P', false ) ) : ( '' );
+		$issetl  = isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'L', false ) ) : ( '' );
 
 		$select  = '<select id="' . esc_attr( $args['label_for'] ) . '"';
 		$select .= 'data-custom="' . esc_attr( $args['pdfshortcode_custom_data'] ) . '"';
@@ -209,8 +226,8 @@ class Settings {
 	 * @param array $args Args.
 	 */
 	public function field_filename_callback( $args ) {
-		$options = \get_option( 'pdfshortcode_options' );
-		$isset   = isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'P', false ) ) : ( '' );
+		$options = \get_option( 'pdfshortcode_options', Defaults::$args );
+		$isset   = ( '' !== $options[ $args['label_for'] ] ) ? ( $options[ $args['label_for'] ] ) : ( Defaults::$args['filename'] );
 
 		$input  = '<input type="text" id="' . esc_attr( $args['label_for'] ) . '"';
 		$input .= 'data-custom="' . esc_attr( $args['pdfshortcode_custom_data'] ) . '"';

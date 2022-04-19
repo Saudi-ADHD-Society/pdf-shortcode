@@ -3,7 +3,7 @@
  * Plugin Name: WP2PDF Shortcode
  * Plugin URI: https://github.com/jvarn/pdf-shortcode
  * Description: Inserts a button to save WordPress content to PDF, including Pages and Formidable Forms Views.
- * Version: 0.5.5
+ * Version: 0.5.7
  * Author: Jeremy Varnham
  * Author URI: https://abuyasmeen.com/
  *
