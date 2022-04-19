@@ -71,7 +71,7 @@ class Shortcode {
 	 * WordPress hooks.
 	 */
 	private function do_actions() {
-		add_shortcode( 'pdfshortcode', array( $this, 'make_shortcode' ) );
+		add_shortcode( 'wp2pdf', array( $this, 'make_shortcode' ) );
 		add_action( 'template_redirect', array( $this, 'process_form' ) ); // or use init.
 	}
 
