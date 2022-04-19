@@ -101,23 +101,36 @@ class Settings {
 			'pdfshortcode'
 		);
 
-		$fields = array(
-			'Direction'           => 'direction',
-			'Orientation'         => 'orientation',
-			'Filename'            => 'filename',
-			'Auto Script to Lang' => 'scripttolang',
-			'Auto Lang to Font'   => 'langtofont',
+		$fields[] = array(
+			'Label' => __( 'Direction', 'pdfshortcode' ),
+			'Slug'  => 'direction',
+		);
+		$fields[] = array(
+			'Label' => __( 'Orientation', 'pdfshortcode' ),
+			'Slug'  => 'orientation',
+		);
+		$fields[] = array(
+			'Label' => __( 'Filename', 'pdfshortcode' ),
+			'Slug'  => 'filename',
+		);
+		$fields[] = array(
+			'Label' => __( 'Auto Script to Lang', 'pdfshortcode' ),
+			'Slug'  => 'scripttolang',
+		);
+		$fields[] = array(
+			'Label' => __( 'Auto Lang to Font', 'pdfshortcode' ),
+			'Slug'  => 'langtofont',
 		);
 
-		foreach ( $fields as $key => $value ) {
+		foreach ( $fields as $field ) {
 			\add_settings_field(
-				'pdfshortcode_field_' . $value,
-				__( $key, 'pdfshortcode' ),
-				array( $this, 'field_' . $value . '_callback' ),
+				'pdfshortcode_field_' . $field['Slug'],
+				$field['Label'],
+				array( $this, 'field_' . $field['Slug'] . '_callback' ),
 				'pdfshortcode',
 				'pdfshortcode_section_defaults',
 				array(
-					'label_for'                => 'pdfshortcode_field_' . $value,
+					'label_for'                => 'pdfshortcode_field_' . $field['Slug'],
 					'class'                    => 'pdfshortcode_row',
 					'pdfshortcode_custom_data' => 'custom',
 				)
