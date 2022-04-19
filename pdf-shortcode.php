@@ -27,8 +27,6 @@ define( 'WP_FFVIEW_PDF_DIR', dirname( plugin_basename( __FILE__ ) ) );
 
 /**
  * Load plugin textdomain.
- *
- * @todo generate pot file.
  */
 function load_textdomain() {
 	load_plugin_textdomain( 'pdfshortcode', false, WP_FFVIEW_PDF_DIR . '/languages' );

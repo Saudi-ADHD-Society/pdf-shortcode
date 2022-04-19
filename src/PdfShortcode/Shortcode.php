@@ -100,12 +100,12 @@ class Shortcode {
 		if ( \get_option( 'pdfshortcode_options' ) ) {
 			$options = \get_option( 'pdfshortcode_options' );
 
-			// Cludge.
+			// Set filename from default.
 			if ( null == $options['pdfshortcode_field_filename'] ) {
 				$options['pdfshortcode_field_filename'] = $this->default_args['filename'];
 			}
 
-			$args    = array(
+			$args = array(
 				'orientation'         => $options['pdfshortcode_field_orientation'],
 				'direction'           => $options['pdfshortcode_field_direction'],
 				'filename'            => $options['pdfshortcode_field_filename'],
@@ -113,7 +113,7 @@ class Shortcode {
 				'auto_lang_to_font'   => $options['pdfshortcode_field_langtofont'],
 			);
 
-			$merged  = \shortcode_atts(
+			$merged = \shortcode_atts(
 				$this->default_args,
 				$args,
 				'pdfshortcode-saved-settings',
@@ -251,9 +251,6 @@ class Shortcode {
 			$this->set_args();
 			if ( $this->check_hash() ) {
 				$html = $this->get_pdf_content( $this->output_args['type'] );
-
-						/*$args_string = http_build_query( $this->output_args, '', ',' );
-						$html .= $args_string;*/
 
 				$mpdf_args['mode']        = $this->output_args['encoding'];
 				$mpdf_args['orientation'] = $this->output_args['orientation'];
