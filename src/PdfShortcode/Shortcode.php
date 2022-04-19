@@ -102,7 +102,7 @@ class Shortcode {
 			$options = \get_option( 'pdfshortcode_options' );
 
 			// Cludge.
-			if ( null === $options['pdfshortcode_field_filename'] ) {
+			if ( null == $options['pdfshortcode_field_filename'] ) {
 				$options['pdfshortcode_field_filename'] = $this->default_args['filename'];
 			}
 

@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: PDF Shortcode
- * Plugin URI: https://github.com/jvarn/ff-views-pdf
- * Description: Inserts a button to save WordPress to PDF, including Pages and Formidable Forms Views.
- * Version: 0.5.3
+ * Plugin Name: WP2PDF Shortcode
+ * Plugin URI: https://github.com/jvarn/pdf-shortcode
+ * Description: Inserts a button to save WordPress content to PDF, including Pages and Formidable Forms Views.
+ * Version: 0.5.5
  * Author: Jeremy Varnham
  * Author URI: https://abuyasmeen.com/
  *
@@ -40,12 +40,5 @@ add_action( 'init', 'Jvarn\load_textdomain' );
  */
 require_once WP_FFVIEW_PDF_PATH . 'vendor/autoload.php';
 
-$pdf_shortcode = new PdfShortcode\Shortcode();
+$pdf_shortcode          = new PdfShortcode\Shortcode();
 $pdf_shortcode_settings = new PdfShortcode\Settings();
-
-/*if ( class_exists('Jvarn\PdfShortcode\Shortcode') ) {
-	echo '<script>console.log("Shortcode Class Exists");</script>';
-}
-if ( class_exists('Jvarn\PdfShortcode\Settings') ) {
-	echo '<script>console.log("Settings Class Exists");</script>';
-}*/
