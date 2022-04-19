@@ -73,22 +73,22 @@ class Settings {
 		// show error/update messages.
 		settings_errors( 'pdfshortcode_messages' );
 
-		?>
-		<div class="wrap">
-			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-			<form action="options.php" method="post">
-				<?php
-				\settings_fields( 'pdfshortcode' );
-				\do_settings_sections( 'pdfshortcode' );
-				\submit_button( 'Save Settings' );
-				?>
-			</form>
-		</div>
-		<?php
+		echo '<div class="wrap">';
+		echo '<h1>' . esc_html( get_admin_page_title() ) . '</h1>';
+		echo '<form action="options.php" method="post">';
+
+		\settings_fields( 'pdfshortcode' );
+		\do_settings_sections( 'pdfshortcode' );
+		\submit_button( 'Save Settings' );
+
+		echo '</form></div>';
+
 	}
 
 	/**
 	 * Custom options and settings.
+	 *
+	 * @todo add translation array to fields array
 	 */
 	public function settings_init() {
 		// Register a new setting for "pdfshortcode" page.
