@@ -142,20 +142,25 @@ class Settings {
 	 * @param array $args Args.
 	 */
 	public function field_direction_callback( $args ) {
-		$options = \get_option( 'pdfshortcode_options' );
-		?>
-		<select
-				id="<?php echo esc_attr( $args['label_for'] ); ?>"
-				data-custom="<?php echo esc_attr( $args['pdfshortcode_custom_data'] ); ?>"
-				name="pdfshortcode_options[<?php echo esc_attr( $args['label_for'] ); ?>]">
-			<option value="ltr" <?php echo isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'ltr', false ) ) : ( '' ); ?>>
-				<?php esc_html_e( 'Left to Right', 'pdfshortcode' ); ?>
-			</option>
-			<option value="rtl" <?php echo isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'rtl', false ) ) : ( '' ); ?>>
-				<?php esc_html_e( 'Right to Left', 'pdfshortcode' ); ?>
-			</option>
-		</select>
-		<?php
+		$options  = \get_option( 'pdfshortcode_options' );
+		$issetltr = isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'ltr', false ) ) : ( '' );
+		$issetrtl = isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'rtl', false ) ) : ( '' );
+
+		$select  = '<select id="' . esc_attr( $args['label_for'] ) . '"';
+		$select .= 'data-custom="' . esc_attr( $args['pdfshortcode_custom_data'] ) . '"';
+		$select .= 'name="pdfshortcode_options[' . esc_attr( $args['label_for'] ) . ']">';
+
+		$select .= '<option value="ltr" ' . $issetltr . '>';
+		$select .= esc_html__( 'Left to Right', 'pdfshortcode' );
+		$select .= '</option>';
+
+		$select .= '<option value="rtl"' . $issetrtl . '>';
+		$select .= esc_html__( 'Right to Left', 'pdfshortcode' );
+		$select .= '</option>';
+
+		$select .= '</select>';
+
+		echo $select;
 	}
 
 	/**
@@ -164,20 +169,25 @@ class Settings {
 	 * @param array $args Args.
 	 */
 	public function field_orientation_callback( $args ) {
-		$options = \get_option( 'pdfshortcode_options' );
-		?>
-		<select
-				id="<?php echo esc_attr( $args['label_for'] ); ?>"
-				data-custom="<?php echo esc_attr( $args['pdfshortcode_custom_data'] ); ?>"
-				name="pdfshortcode_options[<?php echo esc_attr( $args['label_for'] ); ?>]">
-			<option value="P" <?php echo isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'P', false ) ) : ( '' ); ?>>
-				<?php esc_html_e( 'Portrait', 'pdfshortcode' ); ?>
-			</option>
-			<option value="L" <?php echo isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'L', false ) ) : ( '' ); ?>>
-				<?php esc_html_e( 'Landscape', 'pdfshortcode' ); ?>
-			</option>
-		</select>
-		<?php
+		$options  = \get_option( 'pdfshortcode_options' );
+		$issetp = isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'P', false ) ) : ( '' );
+		$issetl = isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'L', false ) ) : ( '' );
+
+		$select  = '<select id="' . esc_attr( $args['label_for'] ) . '"';
+		$select .= 'data-custom="' . esc_attr( $args['pdfshortcode_custom_data'] ) . '"';
+		$select .= 'name="pdfshortcode_options[' . esc_attr( $args['label_for'] ) . ']">';
+
+		$select .= '<option value="P" ' . $issetp . '>';
+		$select .= esc_html__( 'Portrait', 'pdfshortcode' );
+		$select .= '</option>';
+
+		$select .= '<option value="L"' . $issetl . '>';
+		$select .= esc_html__( 'Landscape', 'pdfshortcode' );
+		$select .= '</option>';
+
+		$select .= '</select>';
+
+		echo $select;
 	}
 
 	/**
@@ -187,13 +197,15 @@ class Settings {
 	 */
 	public function field_filename_callback( $args ) {
 		$options = \get_option( 'pdfshortcode_options' );
-		?>
-		<input type="text"
-				id="<?php echo esc_attr( $args['label_for'] ); ?>"
-				data-custom="<?php echo esc_attr( $args['pdfshortcode_custom_data'] ); ?>"
-				name="pdfshortcode_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-				value="<?php echo isset( $options[ $args['label_for'] ] ) ? esc_attr( $options[ $args['label_for'] ] ) : ''; ?>">
-		<?php
+		$isset   = isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'P', false ) ) : ( '' );
+
+		$input  = '<input type="text" id="' . esc_attr( $args['label_for'] ) . '"';
+		$input .= 'data-custom="' . esc_attr( $args['pdfshortcode_custom_data'] ) . '"';
+		$input .= 'name="pdfshortcode_options[' . esc_attr( $args['label_for'] ) . ']" ';
+
+		$input .= 'value="' . $isset . '">';
+
+		echo $input;
 	}
 
 	/**
@@ -203,15 +215,16 @@ class Settings {
 	 */
 	public function field_scripttolang_callback( $args ) {
 		$options = \get_option( 'pdfshortcode_options' );
+		$checked = checked( isset( $options[ $args['label_for'] ] ), true, false );
 
-		?>
-		<input type="checkbox"
-				id="<?php echo esc_attr( $args['label_for'] ); ?>"
-				data-custom="<?php echo esc_attr( $args['pdfshortcode_custom_data'] ); ?>"
-				name="pdfshortcode_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-				value=1<?php checked( isset( $options[ $args['label_for'] ] ) ); ?>>
-		<label for="<?php echo esc_attr( $args['label_for'] ); ?>"><?php esc_html_e( 'Auto Script to Lang', 'pdfshortcode' ); ?></label>
-		<?php
+		$checkbox  = '<input type="checkbox" id="' . esc_attr( $args['label_for'] ) . '"';
+		$checkbox .= 'data-custom="' . esc_attr( $args['pdfshortcode_custom_data'] ) . '"';
+		$checkbox .= 'name="pdfshortcode_options[' . esc_attr( $args['label_for'] ) . ']" ';
+		$checkbox .= 'value="1" ' . $checked . '">';
+
+		$checkbox .= '<label for="' . esc_attr( $args['label_for'] ) . '">' . esc_html__( 'Auto Script to Lang', 'pdfshortcode' ) . '</label>';
+
+		echo $checkbox;
 	}
 
 	/**
@@ -221,14 +234,16 @@ class Settings {
 	 */
 	public function field_langtofont_callback( $args ) {
 		$options = \get_option( 'pdfshortcode_options' );
-		?>
-		<input type="checkbox"
-				id="<?php echo esc_attr( $args['label_for'] ); ?>"
-				data-custom="<?php echo esc_attr( $args['pdfshortcode_custom_data'] ); ?>"
-				name="pdfshortcode_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-				value=1<?php checked( isset( $options[ $args['label_for'] ] ) ); ?>>
-		<label for="<?php echo esc_attr( $args['label_for'] ); ?>"><?php esc_html_e( 'Auto Lang to Font', 'pdfshortcode' ); ?></label>
-		<?php
+		$checked = checked( isset( $options[ $args['label_for'] ] ), true, false );
+
+		$checkbox  = '<input type="checkbox" id="' . esc_attr( $args['label_for'] ) . '"';
+		$checkbox .= 'data-custom="' . esc_attr( $args['pdfshortcode_custom_data'] ) . '"';
+		$checkbox .= 'name="pdfshortcode_options[' . esc_attr( $args['label_for'] ) . ']" ';
+		$checkbox .= 'value="1" ' . $checked . '">';
+
+		$checkbox .= '<label for="' . esc_attr( $args['label_for'] ) . '">' . esc_html__( 'Auto Lang to Font', 'pdfshortcode' ) . '</label>';
+
+		echo $checkbox;
 	}
 
 }
