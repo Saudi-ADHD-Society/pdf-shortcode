@@ -4,6 +4,13 @@ Export Formidable Forms Views or Wordpress Pages to PDF with a Shortcode.
 A simpler up-to-date replacement for [Formidable Pro PDF Extended](https://github.com/jvarn/formidable-pro-pdf-extended).
 
 NB: This is currently an early alpha plugin and should only be used for testing.
+<p align="center">
+    <img src="https://img.shields.io/badge/plugin-v0.5.7-orange"/>
+    <img src="https://img.shields.io/badge/php-%5E7.4-blue"/>
+    <img src="https://img.shields.io/badge/wordpress-%5Ev4.0-blue"/>
+    <img src="https://img.shields.io/github/license/saudi-adhd-society/pdf-shortcode"/>
+    <img src="https://img.shields.io/codefactor/grade/github/saudi-adhd-society/pdf-shortcode"/>
+</p>
 
 ## Requirements
 1. PHP 7.4
