@@ -1,7 +1,9 @@
 # WP 2 PDF Shortcode
 Export Formidable Forms Views or Wordpress Pages to PDF with a Shortcode.
 
-This is a work in progress and is intended to be a simpler up-to-date replacement for [Formidable Pro PDF Extended](https://github.com/jvarn/formidable-pro-pdf-extended).
+A simpler up-to-date replacement for [Formidable Pro PDF Extended](https://github.com/jvarn/formidable-pro-pdf-extended).
+
+NB: This is currently an early alpha plugin and should only be used for testing.
 
 ## Requirements
 1. PHP 7.4
